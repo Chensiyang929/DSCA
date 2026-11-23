@@ -1,6 +1,6 @@
 # DSCA: Dual-Scale Collaborative Adaptation for Single-Scene Full-Resolution Pansharpening
 
-Qinghong Jiang\*, Siyang Chen\*, He Zou, Ding Yiheng, and Liang-Jian Deng<br>
+Qinghong Jiang\*, Siyang Chen\*, He Zou, Yiheng Ding, and Liang-Jian Deng<br>
 University of Electronic Science and Technology of China<br>
 \* These authors contributed equally.
 
