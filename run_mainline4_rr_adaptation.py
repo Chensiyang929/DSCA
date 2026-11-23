@@ -1,4 +1,4 @@
-"""Adapt Mainline-4 independently to every official RR target scene.
+"""Adapt DSCA independently to each official RR target scene.
 
 Training sees only the current scene's MS64/LMS256/PAN256 outer observation
 and its derived MS16/LMS64/PAN64 -> MS64 Internal-Wald pair.  Official GT256
@@ -116,7 +116,7 @@ def main():
               "{teacher}, {sensor}, {sensor_lower}, {scene}, {scene02}."),
     )
     parser.add_argument("--teacher-id", default=None,
-                        help="Audited teacher label stored in every record")
+        help="Teacher label recorded with each result")
     parser.add_argument(
         "--sde-root",
         required=True,

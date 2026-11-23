@@ -1,4 +1,4 @@
-"""Run Configuration B on original-scale observations."""
+"""Adapt DSCA to full-resolution observations."""
 import argparse
 import os
 from pathlib import Path

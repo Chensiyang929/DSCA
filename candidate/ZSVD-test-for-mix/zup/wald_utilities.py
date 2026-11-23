@@ -5,7 +5,7 @@ import torch.nn as nn
 import math
 import scipy.ndimage.filters as ft
 
-# The single-GPU production host has cuda:0, not the historical cuda:2.
+# Use the configured device for the Wald operators.
 _WALD_DEVICE = os.environ.get('WALD_DEVICE', 'cuda:0' if torch.cuda.is_available() else 'cpu')
 if str(_WALD_DEVICE).startswith('cuda'):
     if not torch.cuda.is_available():

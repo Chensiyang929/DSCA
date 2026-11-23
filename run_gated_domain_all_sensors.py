@@ -1,4 +1,4 @@
-"""Four-sensor FR runner for Configuration B and its adapter controls."""
+"""Run full-resolution DSCA and its input adapter comparisons."""
 import json
 import os
 import shutil
@@ -34,7 +34,7 @@ SENSORS = {
     "GF2": dict(obs="gf2", wald="GF2", teacher="GF2", bands=4, pre="QB.pth"),
 }
 
-# Keep one authoritative source for the frozen production settings.
+# Load sensor-specific training settings from the shared benchmark configuration.
 from mainline4_config import SENSORS as FROZEN
 for _sensor, _spec in FROZEN.items():
     SENSORS[_sensor].update({k: _spec[k] for k in ("epochs", "cycle", "gt_lr", "full_lr", "weights")})

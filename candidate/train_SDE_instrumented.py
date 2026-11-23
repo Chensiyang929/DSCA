@@ -89,8 +89,7 @@ data_id = args.data_id
 sensor = args.sensor.upper()
 bands = args.bands
 ratio = args.ratio
-# 混合精度训练标志。FORCE_FP32仅用于严格有效步数对照；默认关闭，
-# 因而不改变历史主线的AMP行为。
+# Select FP32 or automatic mixed precision for FR training.
 force_fp32 = os.environ.get("FORCE_FP32", "0") == "1"
 use_amp = args.amp and (device.type == 'cuda') and not force_fp32
 teacher_weight_mode = os.environ.get('TEACHER_WEIGHT_MODE', 'legacy')
@@ -157,8 +156,7 @@ optimizer = optim.Adam(model_student.parameters(), lr=lr, betas=(0.9, 0.999))
 
 
 
-# 初始化混合精度训练的GradScaler。默认值保持历史PyTorch行为；严格步数
-# 对照可通过AMP_INIT_SCALE显式设置较低初始scale，避免早期溢出跳步。
+# Set the initial gradient scale when mixed precision is enabled.
 amp_init_scale = float(os.environ.get("AMP_INIT_SCALE", "65536.0"))
 if amp_init_scale <= 0:
     parser.error("AMP_INIT_SCALE must be positive")
@@ -357,8 +355,7 @@ def train(training_data_loader, reduced_data_loader, identifier, teacher_output)
                     actual_updates["full_amp_skipped"] += int(skipped)
 
                 else:
-                    # 严格FP32流程：与AMP分支使用完全相同的前向、像素教师权重、
-                    # 归一化空间损失和教师全局缩放，仅取消autocast/GradScaler。
+                    # Compute the FR objective and update in FP32.
                     res_student = model_student(lms, pan, domain="full")
                     fusion_out_ori = res_student + lms
                     fusion_out = fusion_out_ori.squeeze(0)  # [C, H, W]

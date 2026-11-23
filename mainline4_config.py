@@ -1,4 +1,4 @@
-"""Configuration B: sensor-specific 240-update schedules and fixed MTF gains."""
+"""Sensor-specific DSCA adaptation schedules and fixed MTF gains."""
 
 FIXED_ALPHA = {
     "WV3": 0.421988727521689,

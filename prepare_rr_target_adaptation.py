@@ -1,9 +1,4 @@
-"""Build leakage-safe per-scene target-adaptation inputs from official RR H5.
-
-The output observation file contains only MS64/LMS256/PAN256.  The evaluation
-GT256 is deliberately not copied.  A second H5 contains the one-level
-Internal-Wald pair MS16/LMS64/PAN64 -> MS64.
-"""
+"""Prepare observed inputs and their internal Wald pairs for official RR adaptation."""
 
 import argparse
 import hashlib
@@ -98,7 +93,7 @@ def write_internal_wald(source, destination, sensor, ratio, device):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--sensor", required=True, choices=["WV3", "WV2", "QB", "GF2"])
-    parser.add_argument("--official-rr", required=True, help="Official RR H5 containing ms/lms/pan/gt")
+    parser.add_argument("--official-rr", required=True, help="Official RR H5 with ms, lms, and pan observations")
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--ratio", type=int, default=4)
@@ -106,7 +101,7 @@ def main():
                         help="Create only ms/lms/pan for strict Full-only")
     args = parser.parse_args()
     if args.ratio != 4:
-        parser.error("Mainline-4 currently freezes the sensor ratio at 4")
+        parser.error("The DSCA benchmark uses a scale ratio of 4")
 
     sensor = args.sensor.upper()
     bands = 8 if sensor in {"WV3", "WV2"} else 4

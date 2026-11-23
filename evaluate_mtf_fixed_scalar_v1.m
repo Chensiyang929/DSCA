@@ -1,4 +1,4 @@
-% Confirmed mainline: one immutable scalar alpha per sensor, shared by all arms.
+% Score DSCA full-resolution predictions and internal Wald diagnostics with a fixed sensor gain.
 pkg load image; pkg load signal;
 args=argv(); root=args{1}; sensor=args{2}; code=args{3}; alpha=str2double(args{4});
 assert(isfinite(alpha));

@@ -1,4 +1,4 @@
-% Configuration-B FR metrics for a single adapter variant, with MTF off and on.
+% Score an FR adapter variant with zero gain and with the fixed sensor gain.
 pkg load image;
 pkg load signal;
 args=argv();
