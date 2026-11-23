@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+*.h5
+*.hdf5
+*.mat
+*.log
+repro_outputs/
+experiments/
+.DS_Store
+Thumbs.db
