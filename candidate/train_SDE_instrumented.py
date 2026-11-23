@@ -10,14 +10,17 @@ import torch.optim as optim
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 import sys
-import os
+from pathlib import Path
 # 导入混合精度训练所需的库
 from torch.cuda.amp import autocast, GradScaler
+
+support_dir = str(Path(__file__).resolve().parent / "support")
+if support_dir not in sys.path:
+    sys.path.insert(0, support_dir)
 
 from data import Dataset, ReducedDataset  # 数据加载器
 from mymodel import FusionNet  # 学生模型
 from SDE import Net_ms2pan_dual,sobel_filter,ms2pan_convNet_dual  # SDE模块
-print("Updated sys.path:", sys.path)
 from loss import LossCalculator  # 损失计算器
 from teacher_output_loader import load_teacher_output  # 直接运行预训练FusionNet教师
 from loss_weight_config import get_loss_weights
@@ -54,7 +57,7 @@ parser.add_argument("--temperature", type=float, default=1.0, help="蒸馏温度
 parser.add_argument("--amp",default=True, action="store_true", help="启用混合精度训练")
 parser.add_argument("--no-amp", dest="amp", action="store_false", help="Use strict FP32 without AMP skip steps")
 parser.add_argument("--alfa", type=float, default=0.15, help="损失权重")
-parser.add_argument("--data_path", type=str, default=r"HardDisk/HeZou/test_wv3_OrigScale_multiExm1.h5", help="数据文件路径")
+parser.add_argument("--data_path", type=str, required=True, help="数据文件路径")
 parser.add_argument("--use_reduced", type=int, default=1, choices=[0, 1],
                     help="是否启用reduced数据训练 (1启用, 0禁用)")
 parser.add_argument("--reduced_data_path", type=str, default=None,
@@ -143,7 +146,8 @@ print("学生模型初始化完成")
 loss_calculator = LossCalculator(sensor=sensor, ratio=ratio, N=41, device=device)
 
 F_ms2pan = ms2pan_convNet_dual(bands).to(device)
-F_ms2pan.load_state_dict(torch.load(f'model_SDE/{sensor}/{data_id}_ms2pan_convNet_dual.pth'))
+F_ms2pan.load_state_dict(torch.load(f'model_SDE/{sensor}/{data_id}_ms2pan_convNet_dual.pth',
+                                     map_location=device, weights_only=True))
 F_ms2pan.eval()
 F_ms2pan.requires_grad_(False)
 

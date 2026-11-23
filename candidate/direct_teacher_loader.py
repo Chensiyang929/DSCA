@@ -1,4 +1,4 @@
-"""Load a precomputed full-resolution teacher MAT without importing old experiments."""
+"""Load a precomputed full-resolution teacher prediction."""
 import os
 from pathlib import Path
 

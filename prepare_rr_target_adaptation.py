@@ -13,8 +13,8 @@ import torch
 
 
 ROOT = Path(__file__).resolve().parent
-ZUP = ROOT / "candidate" / "ZSVD-test-for-mix" / "zup"
-sys.path.insert(0, str(ZUP))
+SUPPORT = ROOT / "candidate" / "support"
+sys.path.insert(0, str(SUPPORT))
 
 
 def sha256(path):

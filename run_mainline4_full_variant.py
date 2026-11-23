@@ -33,7 +33,7 @@ def main():
         parser.error("Use a non-negative seed and at least one worker")
     spec = SENSORS[args.sensor]
     os.environ.update(
-        ZSVD_EXPERIMENT_ROOT=str(Path(__file__).resolve().parent),
+        DSCA_EXPERIMENT_ROOT=str(Path(__file__).resolve().parent),
         GATED_OUTPUT_ROOT=str(args.output_root.resolve()),
         GATED_WORKERS=str(args.workers),
         GATED_TRAINER=spec["trainer"],

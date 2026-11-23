@@ -5,7 +5,7 @@ import torch.nn as nn
 import math
 import scipy.ndimage.filters as ft
 
-# Use the configured device for the Wald operators.
+# Use the configured device for the Wald degradation operators.
 _WALD_DEVICE = os.environ.get('WALD_DEVICE', 'cuda:0' if torch.cuda.is_available() else 'cpu')
 if str(_WALD_DEVICE).startswith('cuda'):
     if not torch.cuda.is_available():

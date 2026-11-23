@@ -53,7 +53,7 @@ def load_teacher_output(data_id, device, data_path=None, checkpoint_path=None, s
         pan_t = pan_t.unsqueeze(1)
 
     teacher = FusionNet(spectral_num=lms_t.shape[1]).to(device)
-    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=True)
     if isinstance(checkpoint, dict) and "state_dict" in checkpoint:
         checkpoint = checkpoint["state_dict"]
     if isinstance(checkpoint, dict):

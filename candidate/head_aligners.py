@@ -1,4 +1,4 @@
-"""Head-only alignment modules used by the frozen Mainline-4 production models."""
+"""Scale-specific input alignment modules for DSCA."""
 
 import torch
 import torch.nn.functional as F

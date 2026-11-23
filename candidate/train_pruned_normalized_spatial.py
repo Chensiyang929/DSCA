@@ -3,13 +3,13 @@ import os
 os.environ.setdefault('WALD_DEVICE','cuda:0')
 from pathlib import Path
 import sys
-R=Path(__file__).resolve().parent;Z=R/'ZSVD-test-for-mix/zup';sys.path.insert(0,str(Z))
+R=Path(__file__).resolve().parent;Z=R/'support';sys.path.insert(0,str(Z))
 import teacher_output_loader
 from direct_teacher_loader import direct_teacher
 from split_optimizers import install_split_optimizers
 def main():
  teacher_output_loader.load_teacher_output=direct_teacher
- source=(R/'train_SDE_instrumented.py').read_text();old='from mymodel import FusionNet  # 学生模型';assert source.count(old)==1;source=source.replace(old,'from pruned_fusionnet import PrunedFusionNet as FusionNet  # fixed width16 student')
+ source=(R/'train_SDE_instrumented.py').read_text(encoding="utf-8");old='from mymodel import FusionNet  # 学生模型';assert source.count(old)==1;source=source.replace(old,'from pruned_fusionnet import PrunedFusionNet as FusionNet  # fixed width16 student')
  marker='model_student = FusionNet(bands).to(device)';assert source.count(marker)==1;source=source.replace(marker,marker+"; model_student.load_state_dict(torch.load(os.environ['PRUNED_PRETRAIN'],map_location=device,weights_only=True))")
  old_spatial='                        loss_spa = (loss_x + loss_y)/100'
  new_spatial="""                        with torch.no_grad():

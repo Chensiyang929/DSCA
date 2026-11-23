@@ -13,7 +13,8 @@ import torch
 from scipy.io import loadmat
 from protocol_guard import TRAINING_REVISION, guard_output_root
 
-ROOT = Path(os.environ.get("ZSVD_EXPERIMENT_ROOT", Path(__file__).resolve().parent)).resolve()
+default_root = os.environ.get("ZSVD_EXPERIMENT_ROOT", Path(__file__).resolve().parent)
+ROOT = Path(os.environ.get("DSCA_EXPERIMENT_ROOT", default_root)).resolve()
 CODE = ROOT / "candidate"
 OUT = Path(os.environ.get(
     "GATED_OUTPUT_ROOT",
@@ -34,7 +35,7 @@ SENSORS = {
     "GF2": dict(obs="gf2", wald="GF2", teacher="GF2", bands=4, pre="QB.pth"),
 }
 
-# Load sensor-specific training settings from the shared benchmark configuration.
+# Keep one authoritative source for the frozen production settings.
 from mainline4_config import SENSORS as FROZEN
 for _sensor, _spec in FROZEN.items():
     SENSORS[_sensor].update({k: _spec[k] for k in ("epochs", "cycle", "gt_lr", "full_lr", "weights")})

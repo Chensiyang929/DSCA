@@ -1,10 +1,10 @@
-% Score DSCA full-resolution predictions and internal Wald diagnostics with a fixed sensor gain.
+% Score FR predictions and internal Wald diagnostics with a fixed sensor gain.
 pkg load image; pkg load signal;
 args=argv(); root=args{1}; sensor=args{2}; code=args{3}; alpha=str2double(args{4});
 assert(isfinite(alpha));
 toolbox=fullfile(code,'eval_toolbox');
 addpath(fullfile(toolbox,'Tools')); addpath(fullfile(toolbox,'Quality_Indices'));
-addpath(fullfile(code,'candidate','ZSVD-test-for-mix','zup')); cd(toolbox);
+addpath(fullfile(code,'candidate','support')); cd(toolbox);
 names={'PSNR','HQNR','Dlambda','Ds','Q2n','SAM','ERGAS','SCC','Qavg','SSIM'};
 L=11; if strcmp(sensor,'GF2'),L=10;end
 peak=2^L-1; scenes=0:19; if numel(args)>4, scenes=str2double(strsplit(args{5},',')); end

@@ -7,7 +7,7 @@ and the Internal-Wald target is exactly the outer observation MS.
 import os, sys, runpy
 from pathlib import Path
 import h5py, numpy as np
-R=Path(__file__).resolve().parent;sys.path.insert(0,str(R));sys.path.insert(0,str(R/'ZSVD-test-for-mix/zup'))
+R=Path(__file__).resolve().parent;sys.path.insert(0,str(R));sys.path.insert(0,str(R/'support'))
 g=int(os.environ['EXACT_GT']);f=int(os.environ['EXACT_FULL']);assert g>=0 and f>=0 and g+f>0
 schedule_mode=os.environ.get('EXACT_SCHEDULE_MODE','interleaved')
 assert schedule_mode in {'interleaved','full_then_gt','gt_then_full','random'}

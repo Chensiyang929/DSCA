@@ -30,7 +30,7 @@ Obtain the FR and official RR benchmark data from [PanCollection](https://github
 | Frozen FusionNet prediction (`proposed` or `sr`, HWC) | `FR/<sensor>/teacher/<scene>_student_SDE_0.15.mat` |
 | Scene-specific gradient mapper, supplied in the repository | `FR/<sensor>/model_SDE/<scene>_ms2pan_convNet_dual.pth` |
 
-Derive the internal Wald pair from the corresponding FR observations at scale ratio 4. Its `gt` is the observed `ms` from `observations.h5`. The [asset index](RELEASE_NOTES.md) lists the bundled student initializations, teacher checkpoints, and FR gradient mappers. Prepare the teacher prediction MAT files for the target scenes. The official RR experiment uses its own teacher predictions and gradient mappers for the corresponding RR scenes.
+Derive the internal Wald pair from the corresponding FR observations at scale ratio 4. Its `gt` is the observed `ms` from `observations.h5`. The [asset index](RELEASE_NOTES.md) lists the bundled student initializations, teacher checkpoints, and FR gradient mappers. Prepare the teacher prediction MAT files for the target scenes. The FusionNet teacher and Recovered16 pretraining source are in `candidate/teacher/` and `candidate/pretrain_pruned_fusionnet.py`. The official RR experiment uses its own teacher predictions and gradient mappers for the corresponding RR scenes.
 
 ## Full-resolution benchmark
 
@@ -43,6 +43,13 @@ python evaluate.py fr WV3 --scenes 0 --result-root "$OUT/fr"
 ```
 
 For the FR adapter study, set `--adapter shared` or `--adapter base` during adaptation. Use the same adapter with `evaluate.py fr-adapter` to score both zero gain and the fixed sensor gain. The default `head` selects the two scale-specific adapters.
+
+```bash
+python run_mainline4_full_variant.py WV3 --adapter shared --scenes 0 \
+  --seed 10 --output-root "$OUT/fr_shared"
+python evaluate.py fr-adapter WV3 --adapter shared --scenes 0 \
+  --result-root "$OUT/fr_shared"
+```
 
 ## Official reduced-resolution benchmark
 

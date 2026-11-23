@@ -1,4 +1,4 @@
-% Score an FR adapter variant with zero gain and with the fixed sensor gain.
+% Score the FR adapter study with zero gain and with the fixed sensor gain.
 pkg load image;
 pkg load signal;
 args=argv();

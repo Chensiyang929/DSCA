@@ -24,7 +24,8 @@ from mainline4_config import SENSORS
 from protocol_guard import TRAINING_REVISION, guard_output_root
 
 
-ROOT = Path(os.environ.get("ZSVD_EXPERIMENT_ROOT", Path(__file__).resolve().parent)).resolve()
+default_root = os.environ.get("ZSVD_EXPERIMENT_ROOT", Path(__file__).resolve().parent)
+ROOT = Path(os.environ.get("DSCA_EXPERIMENT_ROOT", default_root)).resolve()
 CODE = ROOT / "candidate"
 PRETRAIN = Path(os.environ.get("DSCA_CHECKPOINT_DIR", "checkpoints")).resolve()
 PYTHON = Path(sys.executable)
@@ -116,7 +117,7 @@ def main():
               "{teacher}, {sensor}, {sensor_lower}, {scene}, {scene02}."),
     )
     parser.add_argument("--teacher-id", default=None,
-        help="Teacher label recorded with each result")
+                        help="Audited teacher label stored in every record")
     parser.add_argument(
         "--sde-root",
         required=True,

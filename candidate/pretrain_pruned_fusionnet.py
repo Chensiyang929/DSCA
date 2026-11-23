@@ -1,7 +1,8 @@
 """Fixed activation-pruned initialization and split-only GT+teacher recovery."""
 import argparse,hashlib,json,sys,time
 from pathlib import Path
-R=Path(__file__).resolve().parent;Z=R/'ZSVD-test-for-mix/zup';sys.path.insert(0,str(Z));sys.path.insert(0,str(R/'ZSVD-test-for-mix'))
+R = Path(__file__).resolve().parent
+sys.path.insert(0, str(R / 'support'))
 import h5py,numpy as np,torch
 from torch.utils.data import Dataset,DataLoader
 from teacher.fusionnet import FusionNet as Teacher
